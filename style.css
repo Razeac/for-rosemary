@@ -1,0 +1,775 @@
+/* ==========================================================================
+   Project Birthday - Style System & High Polish (Phase 3)
+   Palette: Warm White (#FCFAF6), Foil Gold (#C5A059, #E5C378), 
+            Navy Blue (#15284F, #1D3557), Wax Red (#9E2A2B, #C1121F)
+   Feel: Designed, intentional, tactile personal gift card.
+   ========================================================================== */
+
+:root {
+  /* Paper Palette */
+  --bg-canvas: #f2ece1;
+  --card-bg: #fffdfa;
+  --card-bg-gradient: linear-gradient(145deg, #ffffff 0%, #faf6ed 100%);
+  --card-border: #e6dcce;
+  
+  /* Gold Foil System */
+  --gold-primary: #bfa15f;
+  --gold-light: #dfc88e;
+  --gold-foil: linear-gradient(135deg, #b89345 0%, #dfc88e 45%, #a67f33 80%, #d4b470 100%);
+  --gold-shadow: rgba(191, 161, 95, 0.22);
+  --gold-border-subtle: rgba(191, 161, 95, 0.35);
+
+  /* Deep Ink Blue System */
+  --blue-deep: #15284f;
+  --blue-mid: #223f6d;
+  --blue-muted: #4a658a;
+  --blue-soft-tint: rgba(21, 40, 79, 0.04);
+
+  /* Wax Red System */
+  --red-seal: #9e2a2b;
+  --red-accent: #c1121f;
+  
+  /* Typography */
+  --text-dark: #232733;
+  --text-body: #323748;
+  --text-muted: #646a7c;
+  --text-caption: #8d94a5;
+  
+  --font-display: 'Cinzel', Georgia, serif;
+  --font-body: 'Lora', Georgia, serif;
+  --font-ui: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  
+  /* Card Geometry - Balanced for 20:9 Xiaomi Mi 11 Lite & Desktops */
+  --card-width: 350px;
+  --card-height: 520px;
+  --radius-card: 16px;
+  
+  /* Physical Depth Shadows */
+  --shadow-flat: 0 20px 42px -10px rgba(21, 40, 79, 0.16),
+                 0 8px 18px -4px rgba(0, 0, 0, 0.06);
+  --shadow-open: 0 28px 56px -12px rgba(21, 40, 79, 0.22),
+                 0 10px 24px -6px rgba(0, 0, 0, 0.09);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--bg-canvas);
+  background-image: 
+    radial-gradient(circle at 10% 15%, rgba(191, 161, 95, 0.1) 0%, transparent 45%),
+    radial-gradient(circle at 90% 85%, rgba(21, 40, 79, 0.09) 0%, transparent 45%),
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.4) 0%, transparent 100%);
+  color: var(--text-dark);
+  font-family: var(--font-ui);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* --------------------------------------------------------------------------
+   Top Navigation Bar (Glassmorphic)
+   -------------------------------------------------------------------------- */
+.top-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 22px;
+  z-index: 50;
+}
+
+.nav-brand {
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--blue-deep);
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.nav-brand::before {
+  content: '✦';
+  font-size: 0.65rem;
+  color: var(--gold-primary);
+}
+
+.nav-controls {
+  display: flex;
+  gap: 12px;
+}
+
+.icon-btn {
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(230, 220, 206, 0.8);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--blue-deep);
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), 
+              border-color 0.2s ease, 
+              background 0.2s ease,
+              box-shadow 0.2s ease;
+}
+
+.icon-btn:hover {
+  background: #ffffff;
+  border-color: var(--gold-primary);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px var(--gold-shadow);
+}
+
+.icon-btn:active {
+  transform: scale(0.92);
+}
+
+/* --------------------------------------------------------------------------
+   3D Viewport & Scene
+   -------------------------------------------------------------------------- */
+.card-viewport {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  position: relative;
+  perspective: 1600px;
+  -webkit-perspective: 1600px;
+}
+
+.card-scene {
+  width: var(--card-width);
+  height: var(--card-height);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* --------------------------------------------------------------------------
+   3D Card Wrapper & States
+   -------------------------------------------------------------------------- */
+.card-3d {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  transition: transform 0.9s cubic-bezier(0.25, 1, 0.35, 1);
+  will-change: transform;
+}
+
+.card-3d.state-front {
+  transform: rotateY(0deg) translateZ(0);
+}
+
+.card-3d.state-inside {
+  transform: rotateY(-8deg) translateZ(12px);
+}
+
+.card-3d.state-back {
+  transform: rotateY(-180deg) translateZ(0);
+}
+
+/* --------------------------------------------------------------------------
+   Card Leaves (Physical paper layers)
+   -------------------------------------------------------------------------- */
+.card-leaf {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--radius-card);
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+}
+
+.leaf-base {
+  z-index: 1;
+  box-shadow: var(--shadow-flat);
+  transition: box-shadow 0.9s ease;
+}
+
+.card-3d.state-inside .leaf-base {
+  box-shadow: var(--shadow-open);
+}
+
+.leaf-cover {
+  z-index: 5;
+  transform-origin: left center;
+  transition: transform 0.9s cubic-bezier(0.25, 1, 0.35, 1);
+  will-change: transform;
+}
+
+.card-3d.state-front .leaf-cover {
+  transform: rotateY(0deg);
+}
+
+.card-3d.state-inside .leaf-cover {
+  transform: rotateY(-172deg);
+}
+
+.card-3d.state-back .leaf-cover {
+  transform: rotateY(-180deg);
+}
+
+/* --------------------------------------------------------------------------
+   Leaf Faces (Front/Back)
+   -------------------------------------------------------------------------- */
+.leaf-face {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--radius-card);
+  background: var(--card-bg-gradient);
+  border: 1px solid var(--card-border);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  overflow: hidden;
+}
+
+.face-front {
+  transform: rotateY(0deg);
+  z-index: 2;
+}
+
+.face-inside-left {
+  transform: rotateY(180deg);
+  background: linear-gradient(155deg, #fdfbf7 0%, #f6f0e4 100%);
+  z-index: 1;
+}
+
+.face-inside-right {
+  transform: rotateY(0deg);
+  background: #fffdf9;
+  z-index: 2;
+}
+
+.face-back {
+  transform: rotateY(180deg);
+  background: linear-gradient(160deg, #fefdfa 0%, #f7f2e8 100%);
+  z-index: 1;
+}
+
+/* --------------------------------------------------------------------------
+   Panel Inner Content Layout
+   -------------------------------------------------------------------------- */
+.panel-inner {
+  height: 100%;
+  padding: 22px 18px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* --------------------------------------------------------------------------
+   Front Cover Design Details
+   -------------------------------------------------------------------------- */
+.border-frame {
+  height: 100%;
+  border: 1.5px solid var(--gold-border-subtle);
+  border-radius: 12px;
+  padding: 22px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+  background: linear-gradient(180deg, rgba(255,255,255,0.92) 0%, rgba(254,251,245,0.98) 100%);
+  position: relative;
+  box-shadow: inset 0 0 20px rgba(191, 161, 95, 0.05);
+}
+
+/* Tactile double inner border */
+.border-frame::before {
+  content: '';
+  position: absolute;
+  inset: 5px;
+  border: 1px solid rgba(191, 161, 95, 0.22);
+  border-radius: 8px;
+  pointer-events: none;
+}
+
+.border-frame::after {
+  content: '';
+  position: absolute;
+  inset: 9px;
+  border: 1px dashed rgba(21, 40, 79, 0.12);
+  border-radius: 6px;
+  pointer-events: none;
+}
+
+.rosemary-motif {
+  margin-top: 2px;
+  filter: drop-shadow(0 4px 8px rgba(191, 161, 95, 0.22));
+  transition: transform 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rosemary-motif:hover {
+  transform: scale(1.03);
+}
+
+.sub-badge {
+  display: inline-block;
+  font-family: var(--font-ui);
+  font-size: 0.7rem;
+  letter-spacing: 2.2px;
+  text-transform: uppercase;
+  color: var(--blue-mid);
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+.front-heading .title {
+  font-family: var(--font-display);
+  font-size: 1.95rem;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.6px;
+  background: var(--gold-foil);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.gold-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 8px;
+  color: var(--gold-primary);
+  font-size: 0.8rem;
+  gap: 8px;
+}
+
+.gold-divider::before,
+.gold-divider::after {
+  content: '';
+  width: 28px;
+  height: 1px;
+  background: var(--gold-border-subtle);
+}
+
+.front-footnote p {
+  font-family: var(--font-ui);
+  font-size: 0.7rem;
+  color: var(--text-caption);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.front-footnote p::after {
+  content: '→';
+  color: var(--gold-primary);
+  font-size: 0.85rem;
+}
+
+/* --------------------------------------------------------------------------
+   Inside Left Accent Page
+   -------------------------------------------------------------------------- */
+.inside-left-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 24px 20px;
+}
+
+.inside-art-frame {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  border: 1px solid rgba(191, 161, 95, 0.3);
+  padding: 30px 18px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.7);
+  box-shadow: inset 0 0 15px rgba(191, 161, 95, 0.05);
+}
+
+.wax-seal {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #b83335, #872122);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #f7e6c4;
+  font-size: 1.1rem;
+  box-shadow: 0 4px 10px rgba(158, 42, 43, 0.3), inset 0 1px 2px rgba(255,255,255,0.4);
+}
+
+.inside-quote {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 0.98rem;
+  line-height: 1.6;
+  color: var(--blue-deep);
+  max-width: 220px;
+}
+
+.mini-accent-line {
+  width: 36px;
+  height: 1.5px;
+  background: var(--gold-primary);
+  border-radius: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   Inside Right Letter Page
+   -------------------------------------------------------------------------- */
+.inside-scrollable {
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--gold-light) transparent;
+  padding: 22px 20px;
+}
+
+.inside-scrollable::-webkit-scrollbar {
+  width: 4px;
+}
+.inside-scrollable::-webkit-scrollbar-thumb {
+  background: var(--gold-light);
+  border-radius: 4px;
+}
+
+.letter-sheet {
+  display: flex;
+  flex-direction: column;
+}
+
+.letter-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  border-bottom: 1px dashed rgba(191, 161, 95, 0.35);
+  padding-bottom: 8px;
+}
+
+.letter-to {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  letter-spacing: 1.5px;
+  color: var(--blue-mid);
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.vintage-stamp {
+  font-size: 0.68rem;
+  font-family: var(--font-display);
+  letter-spacing: 1.5px;
+  color: var(--gold-primary);
+  border: 1px solid var(--gold-primary);
+  padding: 2px 7px;
+  border-radius: 4px;
+  background: rgba(191, 161, 95, 0.05);
+}
+
+.letter-body {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--text-body);
+}
+
+.letter-body p {
+  margin-bottom: 16px;
+}
+
+.letter-closing {
+  margin-top: 22px;
+  font-style: italic;
+  color: var(--blue-deep);
+  font-weight: 500;
+  border-left: 2px solid var(--gold-primary);
+  padding-left: 10px;
+}
+
+/* Spine Crease Realistic Shadow */
+.spine-crease {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 16px;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.09) 0%, rgba(0, 0, 0, 0.03) 60%, transparent 100%);
+  pointer-events: none;
+}
+
+.spine-crease.reverse {
+  left: auto;
+  right: 0;
+  background: linear-gradient(to left, rgba(0, 0, 0, 0.08) 0%, rgba(0, 0, 0, 0.02) 60%, transparent 100%);
+}
+
+/* --------------------------------------------------------------------------
+   Back Cover Design
+   -------------------------------------------------------------------------- */
+.back-card-content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 12px;
+}
+
+.back-title {
+  font-family: var(--font-display);
+  font-size: 1.45rem;
+  color: var(--blue-deep);
+  font-weight: 700;
+}
+
+.back-sub {
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  max-width: 240px;
+}
+
+.qr-container {
+  padding: 12px;
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1.5px solid var(--gold-border-subtle);
+  box-shadow: 0 10px 24px var(--gold-shadow);
+  transition: transform 0.3s ease;
+}
+
+.qr-container:hover {
+  transform: translateY(-2px);
+}
+
+.qr-frame {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.qr-image {
+  display: block;
+  width: 136px;
+  height: 136px;
+  border-radius: 8px;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+.bandlab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  padding: 11px 22px;
+  background: linear-gradient(135deg, var(--blue-deep) 0%, var(--blue-mid) 100%);
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 24px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  box-shadow: 0 6px 18px rgba(21, 40, 79, 0.25);
+  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.25s ease;
+}
+
+.bandlab-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(21, 40, 79, 0.35);
+}
+
+.bandlab-btn:active {
+  transform: scale(0.96);
+}
+
+.music-icon {
+  color: var(--gold-light);
+}
+
+.author-credits {
+  margin-top: 12px;
+}
+
+.credit-text {
+  font-size: 0.75rem;
+  font-family: var(--font-display);
+  letter-spacing: 1.5px;
+  color: var(--text-caption);
+  text-transform: uppercase;
+}
+
+/* --------------------------------------------------------------------------
+   Slider Controls (Glassmorphic Bar & Tactile Thumb)
+   -------------------------------------------------------------------------- */
+.slider-wrapper {
+  padding: 10px 20px 24px;
+  display: flex;
+  justify-content: center;
+  z-index: 50;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.slider-wrapper.faded {
+  opacity: 0.18;
+  transform: translateY(4px);
+}
+
+.slider-wrapper:hover,
+.slider-wrapper:focus-within,
+.slider-wrapper.active-touch {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+.slider-track-container {
+  width: 100%;
+  max-width: 320px;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 12px 18px;
+  border-radius: 24px;
+  border: 1px solid rgba(230, 220, 206, 0.9);
+  box-shadow: 0 8px 24px rgba(21, 40, 79, 0.08);
+}
+
+.slider-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  padding: 0 4px;
+}
+
+.label-dot {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-caption);
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  transition: color 0.25s ease, transform 0.25s ease;
+}
+
+.label-dot.active {
+  color: var(--blue-deep);
+  transform: scale(1.1);
+  font-weight: 700;
+}
+
+.range-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+input[type="range"]#card-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  background: #e7dfd1;
+  border-radius: 4px;
+  outline: none;
+  cursor: pointer;
+  z-index: 2;
+}
+
+input[type="range"]#card-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--gold-foil);
+  border: 2px solid #ffffff;
+  box-shadow: 0 3px 8px rgba(166, 127, 51, 0.4);
+  transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+input[type="range"]#card-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.18);
+}
+
+input[type="range"]#card-slider::-moz-range-thumb {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--gold-primary);
+  border: 2px solid #ffffff;
+  box-shadow: 0 3px 8px rgba(166, 127, 51, 0.4);
+}
+
+.slider-ticks {
+  position: absolute;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+  padding: 0 8px;
+  z-index: 1;
+}
+
+.tick {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #d8cdba;
+  transition: background 0.25s ease, transform 0.25s ease;
+}
+
+.tick.active {
+  background: var(--gold-primary);
+  transform: scale(1.15);
+}
+
+/* --------------------------------------------------------------------------
+   Mobile Viewport Refinements (Xiaomi Mi 11 Lite - 402px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 440px) {
+  :root {
+    --card-width: 326px;
+    --card-height: 486px;
+  }
+  
+  .front-heading .title {
+    font-size: 1.7rem;
+  }
+  
+  .letter-body {
+    font-size: 0.88rem;
+    line-height: 1.62;
+  }
+  
+  .panel-inner {
+    padding: 16px 14px;
+  }
+}

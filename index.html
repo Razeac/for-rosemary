@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Happy Birthday | A Gift for Spice Rack</title>
+  
+  <!-- Fast Typography Preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Lora:ital,wght@0,400;0,500;1,400&family=Plus+Jakarta+Sans:wght@400;600&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Top Bar Controls -->
+  <header class="top-nav">
+    <div class="nav-brand"></div>
+    <div class="nav-controls">
+      <button id="btn-restart" class="icon-btn" aria-label="Restart to front of card" title="Restart to Front">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+          <path d="M3 3v5h5"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- 3D Card Stage Viewport -->
+  <main class="card-viewport">
+    <div class="card-scene" id="card-scene">
+      
+      <!-- 3D Card Physical Object -->
+      <div class="card-3d state-front" id="card-3d">
+        
+        <!-- Base Leaf (Static Right / Back Base) -->
+        <div class="card-leaf leaf-base">
+          <!-- Inside Right Page (Visible when open) -->
+          <div class="leaf-face face-inside-right">
+            <div class="panel-inner inside-scrollable">
+              <div class="letter-sheet">
+                <div class="letter-header">
+                  <span class="vintage-stamp">09 / 10</span>
+                </div>
+                
+                <!-- Verbatim letter text preserved -->
+                <div class="letter-body">
+                  <p>i do not know how to write birthday letters as i never really celebrated mine BUT you are someone worth writing to so i will try</p>
+
+                  <p>i met you in azen server back in april<br>
+                  its now september and october thats like 6-7 months hehe 67<br>
+                  doesn't feel like six months felt like a week just past by<br>
+                  it feels like i have known you longer because you have seen parts of me and i have seen parts of you that most people take years to see</p>
+
+                  <p>thanks for being a really good friend<br>
+                  even if i know that this past few years wasn't your great years has been hard for you for a long ass time your still choosing yourself even when its hard</p>
+
+                  <p>that is what i wish for you and for your future no perfection, no ease, just being you more of what you already are fierce, straight forward, honest, and free she va cadoooo.</p>
+
+                  <p class="letter-closing">
+                    happy belated birthday spice rack<br>
+                    im still glad you existed
+                  </p>
+                </div>
+              </div>
+            </div>
+            <!-- Center spine crease shadow overlay -->
+            <div class="spine-crease"></div>
+          </div>
+
+          <!-- Back Cover Page (Visible when turned over to back) -->
+          <div class="leaf-face face-back">
+            <div class="panel-inner">
+              <div class="back-card-content">
+                <h2 class="back-title">A Song For You</h2>
+                <p class="back-sub">took me a while but atleast its here now</p>
+
+                <!-- Styled QR Presentation with Real Scannable Image -->
+                <div class="qr-container">
+                  <a href="https://www.bandlab.com/join/hllhubw" target="_blank" rel="noopener noreferrer" class="qr-frame" aria-label="Open song on BandLab">
+                    <img src="qr.png" alt="BandLab Song QR Code" class="qr-image" width="136" height="136">
+                  </a>
+                </div>
+
+                <!-- Clickable direct link -->
+                <a href="https://www.bandlab.com/join/hllhubw" target="_blank" rel="noopener noreferrer" class="bandlab-btn" id="bandlab-link">
+                  <span class="music-icon">♫</span>
+                  <span>click to hear the song</span>
+                </a>
+
+                <!-- Author Sign-Off -->
+                <footer class="author-credits">
+                  <div class="gold-divider mini">✦</div>
+                  <p class="credit-text">made with care for Spice Rack</p>
+                </footer>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Flappable Cover Leaf (Hinged on the left) -->
+        <div class="card-leaf leaf-cover" id="leaf-cover">
+          <!-- Front Cover Face -->
+          <div class="leaf-face face-front">
+            <div class="panel-inner">
+              <div class="border-frame">
+                <!-- Rosemary Motif SVG -->
+                <div class="rosemary-motif">
+                  <svg viewBox="0 0 120 180" width="105" height="155" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M60 170 C 60 110, 50 60, 65 15" stroke="var(--gold-primary)" stroke-width="2.5" stroke-linecap="round"/>
+                    <path d="M59 150 C 40 145, 30 135, 25 125" stroke="var(--blue-deep)" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M60 145 C 75 140, 90 135, 95 120" stroke="var(--blue-deep)" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M57 120 C 35 115, 25 100, 20 85" stroke="var(--gold-accent)" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M58 115 C 80 110, 92 100, 100 85" stroke="var(--gold-accent)" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M56 85 C 38 80, 30 65, 28 50" stroke="var(--blue-deep)" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M58 80 C 78 75, 88 65, 92 50" stroke="var(--blue-deep)" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M59 50 C 45 42, 40 30, 42 20" stroke="var(--gold-primary)" stroke-width="1.8" stroke-linecap="round"/>
+                    <path d="M61 48 C 72 40, 80 30, 80 20" stroke="var(--gold-primary)" stroke-width="1.8" stroke-linecap="round"/>
+                    <path d="M63 25 C 62 18, 64 12, 65 10" stroke="var(--red-subtle)" stroke-width="2" stroke-linecap="round"/>
+                  </svg>
+                </div>
+
+                <div class="front-heading">
+                  <span class="sub-badge">for rosemary</span>
+                  <h1 class="title">Happy Birthday</h1>
+                  <div class="gold-divider">
+                    <span>✦</span>
+                  </div>
+                </div>
+
+                <div class="front-footnote">
+                  <p>slide below to open</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Inside Left / Cover Interior Page (Revealed when card is opened) -->
+          <div class="leaf-face face-inside-left">
+            <div class="panel-inner inside-left-content">
+              <div class="inside-art-frame">
+                <div class="wax-seal">✦</div>
+                <p class="inside-quote">"choose yourself even when it's hard"</p>
+                <div class="mini-accent-line"></div>
+              </div>
+            </div>
+            <!-- Spine inner shadow -->
+            <div class="spine-crease reverse"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Bottom Navigation Slider -->
+  <footer class="slider-wrapper" id="slider-wrapper">
+    <div class="slider-track-container">
+      <div class="slider-labels">
+        <span class="label-dot active" data-step="0">Front</span>
+        <span class="label-dot" data-step="1">Inside</span>
+        <span class="label-dot" data-step="2">Back</span>
+      </div>
+
+      <div class="range-box">
+        <input 
+          type="range" 
+          id="card-slider" 
+          min="0" 
+          max="2" 
+          step="1" 
+          value="0" 
+          aria-label="Navigate through card: Front, Inside, and Back"
+        >
+        <div class="slider-ticks">
+          <span class="tick active" data-val="0"></span>
+          <span class="tick" data-val="1"></span>
+          <span class="tick" data-val="2"></span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
